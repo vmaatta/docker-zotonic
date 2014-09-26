@@ -3,7 +3,9 @@
 set -e
 
 echo "Configuring default database connection and admin password from environment"
-su zotonic -c '/usr/local/bin/zotonic_config.awk -v defaults=true /home/zotonic/.zotonic/0.11/zotonic.config /home/zotonic/.zotonic/0.11/zotonic.config'
+TMPFILE=$(mktemp /tmp/zotonic_config.XXXX) && chown zotonic:zotonic $TMPFILE
+su zotonic -c "/usr/local/bin/zotonic_config.awk -v defaults=true /home/zotonic/.zotonic/0.11/zotonic.config > $TMPFILE"
+su zotonic -c "cat $TMPFILE > /home/zotonic/.zotonic/0.11/zotonic.config && rm $TMPFILE"
 
 echo "Fixing site folder user and group"
 chown -R zotonic:zotonic /srv/zotonic/user
@@ -14,7 +16,9 @@ pattern='^.*[^/]'
 for D in */; do
     [[ $D =~ $pattern ]]
     if [[ ${BASH_REMATCH[0]} != "zotonic_status" && ${BASH_REMATCH[0]} != "testsandbox" ]]; then
-	su zotonic -c "/usr/local/bin/zotonic_config.awk ${BASH_REMATCH[0]}/config ${BASH_REMATCH[0]}/config"
+	TMPFILE=$(mktemp /tmp/zotonic_site_config.XXXX) && chown zotonic:zotonic $TMPFILE
+	su zotonic -c "/usr/local/bin/zotonic_config.awk ${BASH_REMATCH[0]}/config > $TMPFILE"
+	su zotonic -c "cat $TMPFILE > ${BASH_REMATCH[0]}/config && rm $TMPFILE"
     fi
 done
 
