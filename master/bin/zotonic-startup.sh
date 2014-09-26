@@ -3,7 +3,7 @@
 set -e
 
 echo "Configuring default database connection and admin password from environment"
-su zotonic -c '/usr/local/bin/zotonic_config /home/zotonic/.zotonic/0.11/zotonic.config /home/zotonic/.zotonic/0.11/zotonic.config'
+su zotonic -c '/usr/local/bin/zotonic_config.awk -v defaults=true /home/zotonic/.zotonic/0.11/zotonic.config /home/zotonic/.zotonic/0.11/zotonic.config'
 
 echo "Fixing site folder user and group"
 chown -R zotonic:zotonic /srv/zotonic/user
@@ -14,7 +14,7 @@ pattern='^.*[^/]'
 for D in */; do
     [[ $D =~ $pattern ]]
     if [[ ${BASH_REMATCH[0]} != "zotonic_status" && ${BASH_REMATCH[0]} != "testsandbox" ]]; then
-	su zotonic -c "/usr/local/bin/zotonic_config -site ${BASH_REMATCH[0]}/config ${BASH_REMATCH[0]}/config"
+	su zotonic -c "/usr/local/bin/zotonic_config.awk ${BASH_REMATCH[0]}/config ${BASH_REMATCH[0]}/config"
     fi
 done
 
