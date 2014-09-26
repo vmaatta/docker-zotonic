@@ -3,10 +3,13 @@
 set -e
 
 echo "Configuring default database connection and admin password from environment"
-su zotonic -c '/usr/local/bin/zotonic_config /srv/zotonic/priv/config.in /srv/zotonic/priv/config'
+su zotonic -c '/usr/local/bin/zotonic_config /home/zotonic/.zotonic/0.11/zotonic.config /home/zotonic/.zotonic/0.11/zotonic.config'
+
+echo "Fixing site folder user and group"
+chown -R zotonic:zotonic /srv/zotonic/user
 
 echo "Overriding site specific configurations from environent"
-cd /srv/zotonic/priv/sites
+cd /srv/zotonic/user/sites
 pattern='^.*[^/]'
 for D in */; do
     [[ $D =~ $pattern ]]
@@ -17,19 +20,19 @@ done
 
 echo "Setting default environment values for site generation"
 if [[ -z $DBHOST ]]; then
-    DBHOST=$(awk -F'"' '/.{dbhost,/{print $2}' /srv/zotonic/priv/config)
+    DBHOST=$(awk -F'"' '/.{dbhost,/{print $2}' /home/zotonic/.zotonic/0.11/zotonic.config)
     if [[ $DBHOST ]]; then
 	echo "export DBHOST=$DBHOST">>/home/zotonic/.bashrc
     fi
 fi
 if [[ -z $DBPORT ]]; then
-    DBPORT=$(awk -F'[,}]' '/.{dbport,/{print $2}' /srv/zotonic/priv/config)
+    DBPORT=$(awk -F'[,}]' '/.{dbport,/{print $2}' /home/zotonic/.zotonic/0.11/zotonic.config)
     if [[ $DBPORT ]]; then
 	echo "export DBPORT=$DBPORT">>/home/zotonic/.bashrc
     fi
 fi
 echo "export DO_LINK=false">>/home/zotonic/.bashrc
-echo "export TARGETDIR=/srv/zotonic/priv/sites">>/home/zotonic/.bashrc
+echo "export TARGETDIR=/srv/zotonic/user/sites">>/home/zotonic/.bashrc
 
 echo "Building site(s)"
 cd /srv/zotonic && su zotonic -c make

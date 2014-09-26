@@ -20,6 +20,6 @@ USER 0:0
 ADD bin/zotonic_config /usr/local/bin/
 ADD bin/zotonic-startup.sh /usr/local/bin/
 CMD ["start"]
-VOLUME /srv/zotonic/priv/sites
+VOLUME /srv/zotonic/user/sites
 EXPOSE 8000
 ENTRYPOINT ["zotonic-startup.sh"]
