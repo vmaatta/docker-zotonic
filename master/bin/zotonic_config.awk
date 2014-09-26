@@ -1,42 +1,61 @@
 #!/usr/bin/awk -f
 /{(admin_)?password/ && ENVIRON["ADMINPASSWORD"] && defaults {
-    sub($2,"\""ENVIRON["ADMINPASSWORD"]"\"},")
+    x = index($2, "}")
+    default = substr($2, 0, x-1)
+    sub(default,"\""ENVIRON["ADMINPASSWORD"]"\"")
     print $0
     next
 }
 /.{dbhost,/ && ENVIRON["DBHOST"] {
-    sub($2,"\""ENVIRON["DBHOST"]"\"},")
+    x = index($2, "}")
+    default = substr($2, 0, x-1)
+    sub(default,"\""ENVIRON["DBHOST"]"\"")
     print $0
     next
 }
 /.{dbport/ && ENVIRON["DB_PORT"] {
     split(ENVIRON["DB_PORT"], results, ":")
-    sub($2, results[3]"},")
+    x = index($2, "}")
+    default = substr($2, 0, x-1)
+    sub(default, results[3])
     print $0
     next
 }
 /.{dbschema,/ && ENVIRON["DBSCHEMA"] && defaults {
-    sub($2,"\""ENVIRON["DBSCHEMA"]"\"},")
+    x = index($2, "}")
+    default = substr($2, 0, x-1)
+    sub(default,"\""ENVIRON["DBSCHEMA"]"\"")
     print $0
     next
 }
 /.{dbuser,/ && ENVIRON["DBUSER"] && ENVIRON["DBPASSWORD"] && defaults {
-    print "   " $1 "\""ENVIRON["DBUSER"]"\"},"
+    x = index($2, "}")
+    default = substr($2, 0, x-1)
+    sub(default,"\""ENVIRON["DBUSER"]"\"")
+    print $0
     next
 }
 /.{dbpassword,/ && ENVIRON["DBUSER"] && ENVIRON["DBPASSWORD"] && defaults {
-    print "   " $1 "\""ENVIRON["DBPASSWORD"]"\"},"
+    # Had to hardcode the search string as it wasn't evaluated correctly
+    # from a variable. Square brackets are causing trouble.
+    sub("\\\[\\\]","\""ENVIRON["DBPASSWORD"]"\"")
+    print $0
     next
 }
 /.{dbuser,/ && ENVIRON["DB_USERPASS"] && (!ENVIRON["DBUSER"] || !ENVIRON["DBPASSWORD"]) && defaults {
     split_result = split(ENVIRON["DB_USERPASS"], results, ":")
-    sub($2,"\""results[1]"\"},")
+    x = index($2, "}")
+    default = substr($2, 0, x-1)
+    sub(default,"\""results[1]"\"")
     print $0
     next
 }
 /.{dbpassword,/ && ENVIRON["DB_USERPASS"] && (!ENVIRON["DBUSER"] || !ENVIRON["DBPASSWORD"]) && defaults {
     split_result = split(ENVIRON["DB_USERPASS"], results, ":")
-    print "   " $1 "\""results[2]"\"},"
+    # Had to hardcode the search string as it wasn't evaluated correctly
+    # from a variable. Square brackets are causing trouble.
+    sub("\\\[\\\]","\""results[2]"\"")
+    print $0
     next
 }
 {
