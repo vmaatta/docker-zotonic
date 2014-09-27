@@ -32,7 +32,7 @@ option than setting environment variables.
 Easiest option for setting parameters is using an ```env``` file and using the
 ```--env-file``` option for ```docker run```.
 
-### Default global default admin password
+### Global default admin password
 
 `ADMINPASSWORD=supersecret`
 
