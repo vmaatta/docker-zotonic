@@ -7,7 +7,7 @@
     next
 }
 /.{dbhost,/ && ENVIRON["DB_PORT"] {
-    split(ENVIRON["DB_PORT"], results, "\[/:\]")
+    split(ENVIRON["DB_PORT"], results, "[/:]")
     x = index($2, "}")
     default = substr($2, 1, x-1)
     sub(default, "\""results[4]"\"")
