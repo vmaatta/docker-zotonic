@@ -17,7 +17,7 @@ WORKDIR /srv/zotonic
 RUN make
 
 USER 0:0
-ADD bin/zotonic_config /usr/local/bin/
+ADD bin/zotonic_config.awk /usr/local/bin/
 ADD bin/zotonic-startup.sh /usr/local/bin/
 CMD ["start"]
 VOLUME /srv/zotonic/priv/sites
