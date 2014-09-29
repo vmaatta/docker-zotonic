@@ -1,13 +1,13 @@
 docker-zotonic
 ==============
 
-Docker packaging for Zotonic. There are adapted versions in subfolders for
-different versions of Zotonic.
+Docker packaging for Zotonic. Different versions of the Dockerfile and context
+adapted for different versions of Zotonic live in different branches. 
 
-Numbered version folders contain packaging using ZIP release versions of
+Numbered version branches contain packaging using ZIP release versions of
 Zotonic repackaged as tarballs. This is because a tarball works better as
-a source format for Docker. The master release version is a running build
-using the master branch from git to build Zotonic during Docker image build.
+a source format for Docker. The ```master``` branch is the bleeding edge that
+clones Zotonic ```master``` on image build.
 
 Environment variables
 ---------------------
