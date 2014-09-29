@@ -8,7 +8,7 @@ su zotonic -c "/usr/local/bin/zotonic_config.awk -v defaults=true /srv/zotonic/p
 su zotonic -c "cat $TMPFILE > /srv/zotonic/priv/config && rm $TMPFILE"
 
 echo "Fixing site folder user and group"
-chown -R zotonic:zotonic /srv/zotonic/user
+chown -R zotonic:zotonic /srv/zotonic
 
 echo "Overriding site specific configurations from environent"
 cd /srv/zotonic/priv/sites
