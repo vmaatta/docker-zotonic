@@ -4,9 +4,9 @@ MAINTAINER Ville Määttä
 
 RUN groupadd -r zotonic && useradd -r -m -g zotonic zotonic
 
-RUN apt-get update && apt-get install -y build-essential imagemagick \
-	git ntp erlang-base erlang-tools erlang-parsetools \
-	erlang-inets erlang-ssl erlang-eunit erlang-dev \
+RUN apt-get update && apt-get install -y build-essential imagemagick\
+	git ntp erlang-base erlang-tools erlang-parsetools\
+	erlang-inets erlang-ssl erlang-eunit erlang-dev\
 	erlang-xmerl erlang-src 
 
 # install Zotonic
