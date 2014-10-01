@@ -4,6 +4,8 @@ MAINTAINER Ville Määttä
 
 RUN groupadd -r zotonic && useradd -r -m -g zotonic zotonic
 
+COPY lib/erlang-solutions_1.0_all.deb /usr/local/lib/
+RUN dpkg -i /usr/local/lib/erlang-solutions_1.0_all.deb
 RUN apt-get update && apt-get install -y build-essential imagemagick\
 	git erlang-base erlang-tools erlang-parsetools\
 	erlang-inets erlang-ssl erlang-eunit erlang-dev\
