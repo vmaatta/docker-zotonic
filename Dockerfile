@@ -21,6 +21,9 @@ USER zotonic
 WORKDIR /srv/zotonic
 RUN make
 
+# Run Zotonic EUnit tests
+RUN /srv/zotonic/bin/zotonic runtests
+
 USER 0:0
 ADD bin/zotonic_config.awk /usr/local/bin/
 ADD bin/zotonic-startup.sh /usr/local/bin/
