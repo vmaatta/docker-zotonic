@@ -4,8 +4,8 @@ set -e
 
 echo "Configuring default database connection and admin password from environment"
 TMPFILE=$(mktemp /tmp/zotonic_config.XXXX) && chown zotonic:zotonic $TMPFILE
-su zotonic -c "/usr/local/bin/zotonic_config.awk -v defaults=true /home/zotonic/.zotonic/0.11/zotonic.config > $TMPFILE"
-su zotonic -c "cat $TMPFILE > /home/zotonic/.zotonic/0.11/zotonic.config && rm $TMPFILE"
+su zotonic -c "/usr/local/bin/zotonic_config.awk -v defaults=true /home/zotonic/.zotonic/zotonic.config > $TMPFILE"
+su zotonic -c "cat $TMPFILE > /home/zotonic/.zotonic/zotonic.config && rm $TMPFILE"
 
 echo "Fixing site folder user and group"
 chown -R zotonic:zotonic /srv/zotonic
@@ -24,13 +24,13 @@ done
 
 echo "Setting default environment values for site generation"
 if [[ -z $DBHOST ]]; then
-    DBHOST=$(awk -F'"' '/.{dbhost,/{print $2}' /home/zotonic/.zotonic/0.11/zotonic.config)
+    DBHOST=$(awk -F'"' '/.{dbhost,/{print $2}' /home/zotonic/.zotonic/zotonic.config)
     if [[ $DBHOST ]]; then
 	echo "export DBHOST=$DBHOST">>/home/zotonic/.bashrc
     fi
 fi
 if [[ -z $DBPORT ]]; then
-    DBPORT=$(awk -F'[,}]' '/.{dbport,/{print $2}' /home/zotonic/.zotonic/0.11/zotonic.config)
+    DBPORT=$(awk -F'[,}]' '/.{dbport,/{print $2}' /home/zotonic/.zotonic/zotonic.config)
     if [[ $DBPORT ]]; then
 	echo "export DBPORT=$DBPORT">>/home/zotonic/.bashrc
     fi

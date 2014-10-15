@@ -17,7 +17,10 @@ RUN git clone git://github.com/zotonic/zotonic.git /srv/zotonic
 # Manually add rebar due to OTP SNI bug:
 # http://erlang.org/pipermail/erlang-questions/2014-September/081107.html
 ADD bin/rebar /srv/zotonic/
-RUN chown -R zotonic:zotonic /srv/zotonic
+# [review] - Workaround for https://github.com/zotonic/zotonic/issues/841
+COPY lib/config/master/zotonic.config /home/zotonic/.zotonic/zotonic.config
+COPY lib/config/master/erlang.config /home/zotonic/.zotonic/erlang.config
+RUN chown -R zotonic:zotonic /srv/zotonic && chown -R zotonic:zotonic /home/zotonic/.zotonic
 USER zotonic
 WORKDIR /srv/zotonic
 RUN make
