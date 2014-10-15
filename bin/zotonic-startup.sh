@@ -15,7 +15,7 @@ cd /srv/zotonic/priv/sites
 pattern='^.*[^/]'
 for D in */; do
     [[ $D =~ $pattern ]]
-    if [[ ${BASH_REMATCH[0]} != "zotonic_status" && ${BASH_REMATCH[0]} != "testsandbox" ]]; then
+    if [[ -d $D && ${BASH_REMATCH[0]} != "zotonic_status" && ${BASH_REMATCH[0]} != "testsandbox" ]]; then
 	TMPFILE=$(mktemp /tmp/zotonic_site_config.XXXX) && chown zotonic:zotonic $TMPFILE
 	su zotonic -c "/usr/local/bin/zotonic_config.awk ${BASH_REMATCH[0]}/config > $TMPFILE"
 	su zotonic -c "cat $TMPFILE > ${BASH_REMATCH[0]}/config && rm $TMPFILE"
