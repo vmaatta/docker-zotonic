@@ -9,6 +9,14 @@ Zotonic repackaged as tarballs. This is because a tarball works better as
 a source format for Docker. The ```master``` branch is the bleeding edge that
 clones Zotonic ```master``` on image build.
 
+Ingredients
+-----------
+
+* ```debian:latest``` [base docker image][]
+* [Erlang Solutions][] [Erlang OTP][] 17.3
+* [Zotonic][] versions 0.10.1 - 0.12 and a rolling build from git ```master```.
+
+
 Environment variables
 ---------------------
 
@@ -150,3 +158,6 @@ $sudo docker run -p 80:8000 -p 443:8443 --volumes-from zotonic-data --rm -ti \
 [Postgres at Docker Hub]: https://registry.hub.docker.com/_/postgres/
 [data volumes]: http://docs.docker.com/userguide/dockervolumes/#data-volumes
 [data volume containers]: http://docs.docker.com/userguide/dockervolumes/#creating-and-mounting-a-data-volume-container
+[base docker image]: https://registry.hub.docker.com/_/debian/
+[Erlang Solutions]: https://www.erlang-solutions.com
+[Erlang OTP]: https://www.erlang-solutions.com/downloads/download-erlang-otp
