@@ -12,10 +12,6 @@ RUN apt-get update && apt-get install -y build-essential imagemagick\
 
 # install Zotonic
 RUN git clone git://github.com/zotonic/zotonic.git /srv/zotonic
-# [review] - Check with Erlang 17.4 / patched 17.3
-# Manually add rebar due to OTP SNI bug:
-# http://erlang.org/pipermail/erlang-questions/2014-September/081107.html
-ADD bin/rebar /srv/zotonic/
 RUN chown -R zotonic:zotonic /srv/zotonic
 USER zotonic
 WORKDIR /srv/zotonic
