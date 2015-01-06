@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y build-essential imagemagick\
 	git exif erlang
 
 # install Zotonic
-ADD lib/zotonic-0.11.0.tar.gz /srv/
+ADD lib/zotonic-0.11.1.tar.gz /srv/
 RUN chown -R zotonic:zotonic /srv/zotonic
 USER zotonic
 WORKDIR /srv/zotonic
