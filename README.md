@@ -13,8 +13,8 @@ Ingredients
 -----------
 
 * ```debian:latest``` [base docker image][]
-* [Erlang Solutions][] [Erlang OTP][] 17.3
-* [Zotonic][] versions 0.10.1 - 0.12 and a rolling build from git ```master```.
+* [Erlang Solutions][] [Erlang OTP][] 17.4
+* [Zotonic][] versions 0.10.1 - 0.12.3 and a rolling build from git ```master```.
 
 
 Environment variables
