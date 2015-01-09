@@ -38,13 +38,18 @@ fi
 echo "export DO_LINK=false">>/home/zotonic/.bashrc
 echo "export TARGETDIR=/srv/zotonic/user/sites">>/home/zotonic/.bashrc
 
-echo "Building site(s)"
-cd /srv/zotonic && su zotonic -c make
+if [[ $1 == addsite* ]]; then
+    echo "Starting server in background and adding site."
+    su zotonic -c "/srv/zotonic/bin/zotonic start" &> /dev/null && sleep 5s && su zotonic -c "/srv/zotonic/bin/zotonic $@"
+else
+    echo "Building site(s)"
+    cd /srv/zotonic && su zotonic -c make
+fi
 
 if [[ $1 = "start" ]]; then
     echo "Starting Zotonic"
     su zotonic -c "/srv/zotonic/bin/zotonic $@" && su zotonic -c "/srv/zotonic/bin/zotonic logtail"
-else
+elif [[ $1 != addsite* ]]; then
     echo "Starting Zotonic with custom parameters"
     su zotonic -c "/srv/zotonic/bin/zotonic $@"
 fi
