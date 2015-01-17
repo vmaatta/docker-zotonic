@@ -25,5 +25,6 @@ ADD bin/zotonic_config.awk /usr/local/bin/
 ADD bin/zotonic-startup.sh /usr/local/bin/
 CMD ["start"]
 VOLUME /srv/zotonic/user/sites
+VOLUME /srv/zotonic/priv/log
 EXPOSE 8000
 ENTRYPOINT ["zotonic-startup.sh"]
