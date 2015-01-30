@@ -112,6 +112,59 @@ locations[^containerlocations] as persistent [data volumes][]:
 [^containerlocations]: The locations shown are the path inside the Zotonic
 container. The host path may be something completely different.
 
+Adding data as a daughter container
+----------------------------------
+
+Another way of adding sites and configuration data, and good for production, is
+to add the data in a daughter container. That is, to use ```FROM``` Docker command
+to base a container on this and add data in the build.
+
+docker-zotonic contains ```OnBuild``` instructions to collect ```config``` and
+```sites``` folders from build context into the daughter container being built
+and populate ```/home/zotonic/.zotonic``` and ```/srv/zotonic/user/sites```
+respectively.
+
+1. Create a folder and into the folder add the following:
+
+```bash
+.
+./Dockerfile
+./config
+./config/0.11
+./config/0.11/erlang.config
+./config/0.11/zotonic.config
+./config/0.12
+./config/0.12/erlang.config
+./config/0.12/zotonic.config
+./config/0.13
+./config/0.13/erlang.config
+./config/0.13/zotonic.config
+./config/user
+./config/user/modules
+./sites
+./sites/samplesite
+./sites/samplesite/config
+./sites/samplesite/controllers
+…
+…
+```
+
+2. Dockerfile can be as simple as this:
+
+```
+FROM ville/zotonic
+# sites and config placed by upstream OnBuild
+
+MAINTAINER John Doe
+```
+
+3. Build and run
+
+```bash
+docker build -t zotonic-packaged:latest .
+docker run -t -p 80:8000 -p 443:8443 --link postgres:db --rm zotonic-packaged start
+```
+
 Examples
 --------
 

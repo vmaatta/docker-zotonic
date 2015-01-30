@@ -23,7 +23,13 @@ RUN /srv/zotonic/bin/zotonic runtests
 USER 0:0
 ADD bin/zotonic_config.awk /usr/local/bin/
 ADD bin/zotonic-startup.sh /usr/local/bin/
+
+# Allow specifying sites and configuration in sub-container
+ONBUILD COPY config /home/zotonic/.zotonic
+ONBUILD COPY sites /srv/zotonic/user/sites
+
 CMD ["start"]
+VOLUME /home/zotonic/.zotonic
 VOLUME /srv/zotonic/user/sites
 VOLUME /srv/zotonic/priv/log
 EXPOSE 8000
