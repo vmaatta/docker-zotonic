@@ -7,8 +7,12 @@ RUN groupadd -r zotonic && useradd -r -m -g zotonic zotonic
 COPY lib/erlang-solutions_1.0_all.deb /usr/local/lib/
 RUN dpkg -i /usr/local/lib/erlang-solutions_1.0_all.deb
 # [todo] - Install only necessary erlang modules.
-RUN apt-get update && apt-get install -y build-essential imagemagick\
-	git exif erlang
+RUN apt-get update && apt-get install -y \
+	build-essential \
+	erlang \
+	exif \
+	git \
+	imagemagick
 
 # install Zotonic
 RUN git clone git://github.com/zotonic/zotonic.git /srv/zotonic
@@ -21,8 +25,9 @@ RUN make
 RUN /srv/zotonic/bin/zotonic runtests
 
 USER 0:0
-ADD bin/zotonic_config.awk /usr/local/bin/
-ADD bin/zotonic-startup.sh /usr/local/bin/
+COPY bin/zotonic_config.awk /usr/local/bin/
+COPY bin/zotonic-startup.sh /usr/local/bin/
+
 CMD ["start"]
 VOLUME /srv/zotonic/user/sites
 VOLUME /srv/zotonic/priv/log
