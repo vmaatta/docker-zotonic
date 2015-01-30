@@ -2,6 +2,11 @@
 
 set -e
 
+if [ -d "/home/zotonic/.zotonic" ]; then
+    echo "Fixing config folder user and group."
+    chown -R zotonic:zotonic /home/zotonic/.zotonic
+fi
+
 echo "Configuring default database connection and admin password from environment"
 TMPFILE=$(mktemp /tmp/zotonic_config.XXXX) && chown zotonic:zotonic $TMPFILE
 su zotonic -c "/usr/local/bin/zotonic_config.awk -v defaults=true /home/zotonic/.zotonic/0.11/zotonic.config > $TMPFILE"
