@@ -1,6 +1,36 @@
 docker-zotonic
 ==============
 
+Overview
+--------
+
+[Zotonic][] is the open source, high speed, real-time web framework  and content
+management system, built with Erlang. It is flexible, extensible and designed
+from the ground up to support dynamic, interactive websites and mobile
+solutions.
+
+> [zotonic.com](http://zotonic.com)
+
+
+Supported tags and respective ```Dockerfile``` links
+----------------------------------------------------
+
+* [0.12][], [latest][]
+* [0.12-onbuild][]
+* [0.11][]
+* [0.11-onbuild][]
+* [0.10.1][]
+* [master][]
+* [master-onbuild][]
+
+
+Ingredients
+-----------
+
+* ```debian:latest``` [base docker image][]
+* [Erlang Solutions][] [Erlang OTP][] 17.4
+* [Zotonic][] versions 0.10.1 - 0.12.3 and a rolling build from git ```master```.
+
 Docker packaging for Zotonic. Different versions of the Dockerfile and context
 adapted for different versions of Zotonic live in different branches.
 
@@ -9,12 +39,48 @@ Zotonic repackaged as tarballs. This is because a tarball works better as
 a source format for Docker. The ```master``` branch is the bleeding edge that
 clones Zotonic ```master``` on image build.
 
-Ingredients
------------
 
-* ```debian:latest``` [base docker image][]
-* [Erlang Solutions][] [Erlang OTP][] 17.4
-* [Zotonic][] versions 0.10.1 - 0.12.3 and a rolling build from git ```master```.
+How-to
+------
+
+To run Zotonic you need a PostgreSQL database server running. Assuming that
+database is to be run in a container as well the following order would be a
+simple example of how to run these two together:
+
+1. Start Postgres container.
+2. Start Zotonic container, linking to Postgres container with name ```db```.
+
+The Zotonic container supports adding new sites with command ```addsite```,
+starting in production with ```start``` and during development getting the more
+detailed logging and Zotonic shell capabilities with ```debug```. Additional
+options to the given command are passed in as is.
+
+For example to start a new site you may run the ```addsite``` command passing
+arguments as described in Zotonic documentation for the version in question:
+
+```bash
+docker run -ti --volumes-from zotonic-data -v \
+	/mnt/sites:/srv/zotonic/user/sites --link postgres:db --rm \
+	ville/zotonic:0.12.3 'addsite -s blog -n testsite testsite'
+```
+
+Note that the addsite and arguments are wrapped in single quotes. The new
+blog-type site is created into a host mounted volume.
+
+It should never be necessary but if you would need to enter a container to for
+example check some issues during development you need to explicitly use
+```--entrypoint bash```.
+
+You can also build a container based on a ```-onbuild``` variant of
+docker-zotonic. Essentially all you need to do is to provide ```config``` and
+```sites``` folders in the same folder as your empty ```Dockerfile``` which
+builds ```FROM``` one of the ```-onbuild``` versions. Once built you can run the
+container normally but with your sites and configuration build into the
+container.
+
+Below you can read in more detail about [Environment variables][], [Data
+Volumes][] and [Linking][]. At the end are more [Examples][] of docker-zotonic
+usage.
 
 
 Environment variables
@@ -73,7 +139,7 @@ Once the PostgreSQL container is running, and populated with any site data if
 necessary, you may link to it with the ```--link postgres:db``` option for
 ```docker run```. **NOTE**: The name of the container running postgres is not
 relevant but it is very important that the alias used is **db**. The alias is
-used for the environment variables inside the container and those are parsed
+used for environment variables inside the container and those are parsed
 to override Zotonic site configuration.
 
 Data Volumes
@@ -155,9 +221,42 @@ $sudo docker run -p 80:8000 -p 443:8443 --volumes-from zotonic-data --rm -ti \
   --entrypoint /bin/bash zotonic
 ```
 
+
+Issues & contributions
+----------------------
+
+If you have any problems with or questions about this image, please add a [GitHub issue][].
+
+Paid support is also avaiable. If you would like for example more substantial custom
+work based on this image or contracted support you may [contact Ruriat][].
+
+Contributions are always welcome. Simple fixes can be sent directly as pull
+requests in the [GitHub project][]. New features and more substantial changes
+should first be discussed in an issue in the same project.
+
+For pull requests please:
+
+* Make changes in a branch from the relevant version branch or tag. I.e. if
+  fixing something in the 0.12 build, first branch off the ```HEAD``` of
+  ```0.12``` branch and make your changes there.
+* If necessary, make the change also to the ```-onbuild``` variant branch.
+
+
+[contact Ruriat]: https://ruriat.com/contact
+[GitHub project]: https://github.com/vmaatta/docker-zotonic
+[GitHub issue]: https://github.com/vmaatta/docker-zotonic/issues
 [Postgres at Docker Hub]: https://registry.hub.docker.com/_/postgres/
 [data volumes]: http://docs.docker.com/userguide/dockervolumes/#data-volumes
 [data volume containers]: http://docs.docker.com/userguide/dockervolumes/#creating-and-mounting-a-data-volume-container
 [base docker image]: https://registry.hub.docker.com/_/debian/
 [Erlang Solutions]: https://www.erlang-solutions.com
 [Erlang OTP]: https://www.erlang-solutions.com/downloads/download-erlang-otp
+[Zotonic]: http://zotonic.com/
+[0.12]: https://github.com/vmaatta/docker-zotonic/blob/0.12/Dockerfile
+[latest]: https://github.com/vmaatta/docker-zotonic/blob/latest/Dockerfile
+[0.12-onbuild]: https://github.com/vmaatta/docker-zotonic/blob/0.12-onbuild/Dockerfile
+[0.11]: https://github.com/vmaatta/docker-zotonic/blob/0.11/Dockerfile
+[0.11-onbuild]: https://github.com/vmaatta/docker-zotonic/blob/0.11-onbuild/Dockerfile
+[0.10.1]: https://github.com/vmaatta/docker-zotonic/blob/0.10.1/Dockerfile
+[master]: https://github.com/vmaatta/docker-zotonic/blob/master/Dockerfile
+[master-onbuild]: https://github.com/vmaatta/docker-zotonic/blob/master-onbuild/Dockerfile
