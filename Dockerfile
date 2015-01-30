@@ -29,6 +29,7 @@ COPY bin/zotonic_config.awk /usr/local/bin/
 COPY bin/zotonic-startup.sh /usr/local/bin/
 
 CMD ["start"]
+VOLUME /home/zotonic/.zotonic
 VOLUME /srv/zotonic/user/sites
 VOLUME /srv/zotonic/priv/log
 EXPOSE 8000
