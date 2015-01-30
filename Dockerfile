@@ -1,4 +1,4 @@
-FROM ville/zotonic:0.12.3-onbuild
+FROM ville/zotonic:0.12.3
 
 # Allow specifying sites and configuration in sub-container
 ONBUILD COPY config /home/zotonic/.zotonic
