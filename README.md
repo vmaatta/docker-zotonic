@@ -2,7 +2,7 @@ docker-zotonic
 ==============
 
 Docker packaging for Zotonic. Different versions of the Dockerfile and context
-adapted for different versions of Zotonic live in different branches. 
+adapted for different versions of Zotonic live in different branches.
 
 Numbered version branches contain packaging using ZIP release versions of
 Zotonic repackaged as tarballs. This is because a tarball works better as
@@ -44,7 +44,7 @@ Easiest option for setting parameters is using an ```env``` file and using the
 
 `ADMINPASSWORD=supersecret`
 
-### Database variables 
+### Database variables
 
 Host and port are likely to be set by linking but can be overridden by variable.
 You can set protocol to anything, like 'tcp', but the value is not used.
@@ -193,7 +193,7 @@ $sudo docker run -p 80:8000 -p 443:8443 --volumes-from zotonic-data \
 ```
 
 ```
-$cat zotonic.env 
+$cat zotonic.env
 ADMINPASSWORD=supersecret_default_pass
 ```
 
