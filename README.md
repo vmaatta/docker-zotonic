@@ -231,7 +231,7 @@ MAINTAINER John Doe
 
 ```bash
 docker build -t zotonic-packaged:latest .
-docker run -t -p 80:8000 -p 443:8443 --link postgres:db --rm zotonic-packaged start
+docker run -p 80:8000 -p 443:8443 --link postgres:db --rm zotonic-packaged start
 ```
 
 
@@ -259,7 +259,7 @@ Also note the use of a file containing environment variables.
 
 ```bash
 $sudo docker run -p 80:8000 -p 443:8443 --volumes-from zotonic-data \
-  --link db:db --env-file zotonic.env --rm -t zotonic
+  --link db:db --env-file zotonic.env --rm zotonic
 ```
 
 ```
