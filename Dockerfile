@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
 	imagemagick
 
 # install Zotonic
-ADD lib/zotonic-0.12.3.tar.gz /srv/
+ADD lib/zotonic-0.12.4.tar.gz /srv/
 RUN chown -R zotonic:zotonic /srv/zotonic
 USER zotonic
 WORKDIR /srv/zotonic
