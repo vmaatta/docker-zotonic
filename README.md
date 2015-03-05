@@ -228,7 +228,7 @@ starting Zotonic might crash expecting those files to be present.
 2. Dockerfile can be as simple as this:
 
 ```
-FROM ruriat/zotonic:0.12-onbuild
+FROM ruriat/zotonic:onbuild
 # sites and config placed by upstream OnBuild
 
 MAINTAINER John Doe
