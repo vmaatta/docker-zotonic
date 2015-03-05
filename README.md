@@ -63,7 +63,7 @@ arguments as described in Zotonic documentation for the version in question:
 ```bash
 docker run -ti --volumes-from zotonic-data -v \
 	/mnt/sites:/srv/zotonic/user/sites --link postgres:db --rm \
-	ville/zotonic:0.12.3 'addsite -s blog -n testsite testsite'
+	ville/zotonic:0.12.4 'addsite -s blog -n testsite testsite'
 ```
 
 Note that the addsite and arguments are wrapped in single quotes. The new
