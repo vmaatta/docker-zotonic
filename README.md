@@ -214,9 +214,16 @@ respectively.
 ./sites/samplesite
 ./sites/samplesite/config
 ./sites/samplesite/controllers
+./log
+./log/console.log
+./log/crash.log
+./log/error.log
 …
 …
 ```
+
+**NOTE**: Better include initially empty `log` folder and files because a freshly
+starting Zotonic might crash expecting those files to be present.
 
 2. Dockerfile can be as simple as this:
 
