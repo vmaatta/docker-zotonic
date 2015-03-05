@@ -63,7 +63,7 @@ arguments as described in Zotonic documentation for the version in question:
 ```bash
 docker run -ti --volumes-from zotonic-data -v \
 	/mnt/sites:/srv/zotonic/user/sites --link postgres:db --rm \
-	ville/zotonic:0.12.4 'addsite -s blog -n testsite testsite'
+	ruriat/zotonic:0.12.4 'addsite -s blog -n testsite testsite'
 ```
 
 Note that the addsite and arguments are wrapped in single quotes. The new
@@ -221,7 +221,7 @@ respectively.
 2. Dockerfile can be as simple as this:
 
 ```
-FROM ville/zotonic:0.12-onbuild
+FROM ruriat/zotonic:0.12-onbuild
 # sites and config placed by upstream OnBuild
 
 MAINTAINER John Doe
