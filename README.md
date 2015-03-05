@@ -310,8 +310,8 @@ For pull requests please:
 [Erlang OTP]: https://www.erlang-solutions.com/downloads/download-erlang-otp
 [Zotonic]: http://zotonic.com/
 [0.12]: https://github.com/vmaatta/docker-zotonic/blob/0.12/Dockerfile
-[0.12-3][]: https://github.com/vmaatta/docker-zotonic/blob/0.12.3/Dockerfile
-[0.12-4][]: https://github.com/vmaatta/docker-zotonic/blob/0.12.4/Dockerfile
+[0.12-3]: https://github.com/vmaatta/docker-zotonic/blob/0.12.3/Dockerfile
+[0.12-4]: https://github.com/vmaatta/docker-zotonic/blob/0.12.4/Dockerfile
 [latest]: https://github.com/vmaatta/docker-zotonic/blob/latest/Dockerfile
 [0.12-onbuild]: https://github.com/vmaatta/docker-zotonic/blob/0.12-onbuild/Dockerfile
 [0.11]: https://github.com/vmaatta/docker-zotonic/blob/0.11/Dockerfile
