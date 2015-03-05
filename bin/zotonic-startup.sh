@@ -9,8 +9,8 @@ fi
 
 echo "Configuring default database connection and admin password from environment"
 TMPFILE=$(mktemp /tmp/zotonic_config.XXXX) && chown zotonic:zotonic $TMPFILE
-su zotonic -c "/usr/local/bin/zotonic_config.awk -v defaults=true /home/zotonic/.zotonic/0.13/zotonic.config > $TMPFILE"
-su zotonic -c "cat $TMPFILE > /home/zotonic/.zotonic/0.13/zotonic.config && rm $TMPFILE"
+gosu zotonic /usr/local/bin/zotonic_config.awk -v defaults=true /home/zotonic/.zotonic/0.13/zotonic.config > $TMPFILE
+gosu zotonic cat $TMPFILE > /home/zotonic/.zotonic/0.13/zotonic.config && rm $TMPFILE
 
 echo "Fixing site folder user and group"
 chown -R zotonic:zotonic /srv/zotonic
@@ -22,8 +22,8 @@ for D in */; do
     [[ $D =~ $pattern ]]
     if [[ -d $D && ${BASH_REMATCH[0]} != "zotonic_status" && ${BASH_REMATCH[0]} != "testsandbox" ]]; then
 	TMPFILE=$(mktemp /tmp/zotonic_site_config.XXXX) && chown zotonic:zotonic $TMPFILE
-	su zotonic -c "/usr/local/bin/zotonic_config.awk ${BASH_REMATCH[0]}/config > $TMPFILE"
-	su zotonic -c "cat $TMPFILE > ${BASH_REMATCH[0]}/config && rm $TMPFILE"
+	gosu zotonic /usr/local/bin/zotonic_config.awk ${BASH_REMATCH[0]}/config > $TMPFILE
+	gosu zotonic cat $TMPFILE > ${BASH_REMATCH[0]}/config && rm $TMPFILE
     fi
 done
 
@@ -45,16 +45,16 @@ echo "export TARGETDIR=/srv/zotonic/user/sites">>/home/zotonic/.bashrc
 
 if [[ $1 == addsite* ]]; then
     echo "Starting server in background and adding site."
-    su zotonic -c "/srv/zotonic/bin/zotonic start" &> /dev/null && sleep 5s && su zotonic -c "/srv/zotonic/bin/zotonic $@"
+    HOME=/home/zotonic gosu zotonic /srv/zotonic/bin/zotonic start &> /dev/null && sleep 5s && HOME=/home/zotonic gosu zotonic /srv/zotonic/bin/zotonic $@
 else
     echo "Building site(s)"
-    cd /srv/zotonic && su zotonic -c make
+    cd /srv/zotonic && HOME=/home/zotonic gosu zotonic make
 fi
 
 if [[ $1 = "start" ]]; then
     echo "Starting Zotonic"
-    su zotonic -c "/srv/zotonic/bin/zotonic $@" && su zotonic -c "/srv/zotonic/bin/zotonic logtail"
+    HOME=/home/zotonic gosu zotonic /srv/zotonic/bin/zotonic $@ && HOME=/home/zotonic gosu zotonic /srv/zotonic/bin/zotonic logtail
 elif [[ $1 != addsite* ]]; then
     echo "Starting Zotonic with custom parameters"
-    su zotonic -c "/srv/zotonic/bin/zotonic $@"
+    HOME=/home/zotonic gosu zotonic /srv/zotonic/bin/zotonic $@
 fi

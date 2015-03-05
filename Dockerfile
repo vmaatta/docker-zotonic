@@ -27,6 +27,8 @@ RUN /srv/zotonic/bin/zotonic runtests
 USER 0:0
 COPY bin/zotonic_config.awk /usr/local/bin/
 COPY bin/zotonic-startup.sh /usr/local/bin/
+# add gosu for Docker compatible 'sudo'
+COPY bin/gosu /usr/local/bin/
 
 CMD ["start"]
 VOLUME /home/zotonic/.zotonic
