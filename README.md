@@ -29,7 +29,7 @@ Supported tags and respective ```Dockerfile``` links
 Ingredients
 -----------
 
-* ```debian:latest``` [base docker image][]
+* ```debian:wheezy``` [base docker image][]
 * [Erlang Solutions][] [Erlang OTP][] 17.4
 * [Zotonic][] versions 0.10.1 - 0.12.4 and a rolling build from git ```master```.
 
