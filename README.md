@@ -30,7 +30,7 @@ Ingredients
 -----------
 
 * ```debian:wheezy``` [base docker image][]
-* [Erlang Solutions][] [Erlang OTP][] 17.4
+* Latest [Erlang Solutions][] [Erlang OTP][] using DEB install.
 * [Zotonic][] versions 0.10.1 - 0.12.4 and a rolling build from git ```master```.
 
 Docker packaging for Zotonic. Different versions of the Dockerfile and context
@@ -79,10 +79,10 @@ docker-zotonic. Essentially all you need to do is to provide ```config``` and
 builds ```FROM``` one of the ```-onbuild``` versions. Once built you can run
 the container normally but with your sites and configuration build into the
 container. There is more information about OnBuild containers in section
-[Adding data as a daughter container][].
+[Adding data as a daughter container](#adding-data-as-a-daughter-container).
 
-Below you can read in more detail about [Environment variables][], [Data
-Volumes][] and [Linking][]. At the end are more [Examples][] of docker-zotonic
+Below you can read in more detail about [Environment variables](#environment-variables), [Data
+Volumes][] and [Linking](#linking). At the end are more [Examples](#examples) of docker-zotonic
 usage.
 
 
@@ -157,10 +157,10 @@ option for ```docker run```.
 Also note that a data volume can also be just a single file as seen in the case
 of the global ```config.in``` file below. You may provide a modified version of the
 config.in file for example to set SMTP settings and on container start the
-database settings are set by the script as described in [Environment variables][]
+database settings are set by the script as described in [Environment variables](#environment-variables)
 
 However data volumes are set up Zotonic should have access to the following
-locations[^containerlocations] as persistent [data volumes][]:
+locations [^containerlocations] as persistent [data volumes][]:
 
 ### Zotonic 0.11 and later ###
 
@@ -178,7 +178,7 @@ locations[^containerlocations] as persistent [data volumes][]:
 /srv/zotonic/priv/sites
 ```
 
-[^containerlocations]: The locations shown are the path inside the Zotonic
+[^containerlocations]: The locations shown are the path inside a Zotonic
 container. The host path may be something completely different.
 
 Adding data as a daughter container
