@@ -15,7 +15,9 @@ solutions.
 Supported tags and respective ```Dockerfile``` links
 ----------------------------------------------------
 
-* [0.12][], [latest][]
+* [0.13][], [latest][]
+* [0.13-onbuild]
+* [0.12][]
 * [0.12-3][]
 * [0.12-4][]
 * [0.12-onbuild][], [onbuild][]
@@ -31,7 +33,7 @@ Ingredients
 
 * ```debian:wheezy``` [base docker image][]
 * Latest [Erlang Solutions][] [Erlang OTP][] using DEB install.
-* [Zotonic][] versions 0.10.1 - 0.12.4 and a rolling build from git ```master```.
+* [Zotonic][] versions 0.10.1 - 0.13.0 and a rolling build from git ```master```.
 
 Docker packaging for Zotonic. Different versions of the Dockerfile and context
 adapted for different versions of Zotonic live in different branches.
@@ -63,7 +65,7 @@ arguments as described in Zotonic documentation for the version in question:
 ```bash
 docker run -ti --volumes-from zotonic-data -v \
 	/mnt/sites:/srv/zotonic/user/sites --link postgres:db --rm \
-	ruriat/zotonic:0.12.4 'addsite -s blog -n testsite testsite'
+	ruriat/zotonic:0.13.0 'addsite -s blog -n testsite testsite'
 ```
 
 Note that the addsite and arguments are wrapped in single quotes. The new
@@ -316,11 +318,13 @@ For pull requests please:
 [Erlang Solutions]: https://www.erlang-solutions.com
 [Erlang OTP]: https://www.erlang-solutions.com/downloads/download-erlang-otp
 [Zotonic]: http://zotonic.com/
+[0.13]: https://github.com/vmaatta/docker-zotonic/blob/0.13/Dockerfile
 [0.12]: https://github.com/vmaatta/docker-zotonic/blob/0.12/Dockerfile
 [0.12-3]: https://github.com/vmaatta/docker-zotonic/blob/0.12.3/Dockerfile
 [0.12-4]: https://github.com/vmaatta/docker-zotonic/blob/0.12.4/Dockerfile
 [latest]: https://github.com/vmaatta/docker-zotonic/blob/latest/Dockerfile
 [0.12-onbuild]: https://github.com/vmaatta/docker-zotonic/blob/0.12-onbuild/Dockerfile
+[0.13-onbuild]: https://github.com/vmaatta/docker-zotonic/blob/0.13-onbuild/Dockerfile
 [onbuild]: https://github.com/vmaatta/docker-zotonic/blob/0.12-onbuild/Dockerfile
 [0.11]: https://github.com/vmaatta/docker-zotonic/blob/0.11/Dockerfile
 [0.11-onbuild]: https://github.com/vmaatta/docker-zotonic/blob/0.11-onbuild/Dockerfile
