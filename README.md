@@ -22,6 +22,7 @@ Supported tags and respective ```Dockerfile``` links
 * [0.12-4][]
 * [0.12-onbuild][], [onbuild][]
 * [0.11][]
+* [0.11.1][]
 * [0.11-onbuild][]
 * [0.10.1][]
 * [master][]
@@ -328,6 +329,7 @@ For pull requests please:
 [onbuild]: https://github.com/vmaatta/docker-zotonic/blob/0.12-onbuild/Dockerfile
 [0.11]: https://github.com/vmaatta/docker-zotonic/blob/0.11/Dockerfile
 [0.11-onbuild]: https://github.com/vmaatta/docker-zotonic/blob/0.11-onbuild/Dockerfile
+[0.11.1]: https://github.com/vmaatta/docker-zotonic/blob/0.11.1/Dockerfile
 [0.10.1]: https://github.com/vmaatta/docker-zotonic/blob/0.10.1/Dockerfile
 [master]: https://github.com/vmaatta/docker-zotonic/blob/master/Dockerfile
 [master-onbuild]: https://github.com/vmaatta/docker-zotonic/blob/master-onbuild/Dockerfile
