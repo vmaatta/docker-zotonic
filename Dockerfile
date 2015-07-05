@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
 	imagemagick
 
 # install Zotonic
-RUN git clone git://github.com/zotonic/zotonic.git /srv/zotonic
+ADD lib/zotonic-0.13.0.tar.gz /srv/
 RUN chown -R zotonic:zotonic /srv/zotonic
 USER zotonic
 WORKDIR /srv/zotonic
