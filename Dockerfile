@@ -1,4 +1,4 @@
-FROM ville/zotonic:master
+FROM ruriat/zotonic:master
 
 # Allow specifying sites and configuration in sub-container
 ONBUILD COPY config /home/zotonic/.zotonic
