@@ -1,38 +1,6 @@
-FROM debian:wheezy
+FROM ruriat/zotonic:0.13.0
 
-MAINTAINER Ville Määttä
-
-RUN groupadd -r zotonic && useradd -r -m -g zotonic zotonic
-
-COPY lib/erlang-solutions_1.0_all.deb /usr/local/lib/
-RUN dpkg -i /usr/local/lib/erlang-solutions_1.0_all.deb
-# [todo] - Install only necessary erlang modules.
-RUN apt-get update && apt-get install -y \
-	build-essential \
-	erlang \
-	exif \
-	git \
-	imagemagick
-
-# install Zotonic
-ADD lib/zotonic-0.13.0.tar.gz /srv/
-RUN chown -R zotonic:zotonic /srv/zotonic
-USER zotonic
-WORKDIR /srv/zotonic
-RUN make
-
-# Run Zotonic EUnit tests
-RUN /srv/zotonic/bin/zotonic runtests
-
-USER 0:0
-COPY bin/zotonic_config.awk /usr/local/bin/
-COPY bin/zotonic-startup.sh /usr/local/bin/
-# add gosu for Docker compatible 'sudo'
-COPY bin/gosu /usr/local/bin/
-
-CMD ["start"]
-VOLUME /home/zotonic/.zotonic
-VOLUME /srv/zotonic/user/sites
-VOLUME /srv/zotonic/priv/log
-EXPOSE 8000
-ENTRYPOINT ["zotonic-startup.sh"]
+# Allow specifying sites and configuration in sub-container
+ONBUILD COPY config /home/zotonic/.zotonic
+ONBUILD COPY sites /srv/zotonic/user/sites
+ONBUILD COPY log /srv/zotonic/user/log
