@@ -1,4 +1,4 @@
-FROM ruriat/zotonic:0.13.0
+FROM ruriat/zotonic:0.13
 
 # Allow specifying sites and configuration in sub-container
 ONBUILD COPY config /home/zotonic/.zotonic
